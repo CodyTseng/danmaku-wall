@@ -56,19 +56,43 @@ export default function App(): JSX.Element {
   }, []);
 
   return (
-    <div className="p-4 flex flex-wrap">
-      {comments.length
-        ? comments.map((comment) => (
-            <div className="flex p-1 m-1 border rounded-md">
-              <a
-                href={`http://www.youtube.com/watch?v=${comment.videoId}&t=${comment.time}s`}
-                target="_blank"
-              >
-                {comment.content}
-              </a>
-            </div>
-          ))
-        : "Loading..."}
+    <div className="p-4 space-y-4">
+      <p>
+        If you want to see danmaku comments from others or send danmaku comments
+        on YouTube, you need to install the{" "}
+        <a
+          className="underline"
+          href="https://chromewebstore.google.com/detail/danmakustr-decentralized/mohbdimkkpjjibdfipfajpgpmegnglhb"
+          target="_blank"
+        >
+          danmakustr extension
+        </a>{" "}
+        first.
+      </p>
+      <p>
+        Source code:{" "}
+        <a
+          className="underline"
+          href="https://github.com/CodyTseng/danmakustr"
+          target="_blank"
+        >
+          https://github.com/CodyTseng/danmakustr
+        </a>
+      </p>
+      <div className="flex flex-wrap">
+        {comments.length
+          ? comments.map((comment) => (
+              <div className="flex p-1 m-1 border rounded-md">
+                <a
+                  href={`http://www.youtube.com/watch?v=${comment.videoId}&t=${comment.time}s`}
+                  target="_blank"
+                >
+                  {comment.content}
+                </a>
+              </div>
+            ))
+          : "Loading..."}
+      </div>
     </div>
   );
 }
