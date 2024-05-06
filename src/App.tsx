@@ -79,18 +79,21 @@ export default function App(): JSX.Element {
           https://github.com/CodyTseng/danmakustr
         </a>
       </p>
+      <p>Below are the recent danmaku comments sent by users. You can click to jump to the corresponding video:</p>
       <div className="flex flex-wrap">
         {comments.length
           ? comments.map((comment) => (
-              <div className="flex p-1 m-1 border rounded-md">
-                <a
-                  href={`http://www.youtube.com/watch?v=${comment.videoId}&t=${comment.time}s`}
-                  target="_blank"
-                >
-                  {comment.content}
-                </a>
+            <a
+              href={`http://www.youtube.com/watch?v=${comment.videoId}&t=${comment.time}s`}
+              target="_blank"
+              className="flex p-1 m-1 underline items-center"
+            >
+              {comment.content}
+              <div className="ml-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6" /><path d="m21 3-9 9" /><path d="M15 3h6v6" /></svg>
               </div>
-            ))
+            </a>
+          ))
           : "Loading..."}
       </div>
     </div>
