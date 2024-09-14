@@ -1,10 +1,12 @@
 import NDK, { NDKEvent } from "@nostr-dev-kit/ndk";
 import { useEffect, useState } from "react";
+import { sortBy } from "lodash";
 
 type Comment = {
   videoId: string;
   time: number;
   content: string;
+  created_at: number;
 };
 
 export default function App(): JSX.Element {
@@ -37,22 +39,25 @@ export default function App(): JSX.Element {
       videoId,
       time,
       content,
+      created_at: event.created_at,
     };
   };
 
-  useEffect(() => {
-    ndk.connect().then(() => {
-      ndk.fetchEvents({ kinds: [2333 as any], limit: 1000 }).then((events) => {
-        const comments: Comment[] = [];
-        events.forEach((event) => {
-          const comment = convertToComment(event);
-          if (!comment) return;
+  const init = async () => {
+    await ndk.connect();
+    const events = await ndk.fetchEvents({ kinds: [2333 as any], limit: 1000 });
+    const comments: Comment[] = [];
+    events.forEach((event) => {
+      const comment = convertToComment(event);
+      if (!comment) return;
 
-          comments.push(comment);
-        });
-        setComments(comments);
-      });
+      comments.push(comment);
     });
+    setComments(sortBy(comments, (c) => -c.created_at));
+  }
+
+  useEffect(() => {
+    init()
   }, []);
 
   return (
